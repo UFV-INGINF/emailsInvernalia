@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>es.ufv.dis</groupId>
 	<artifactId>firstAPI</artifactId>
-	<version>1.0.0</version>
+	<version>1.0.1</version>
 	<name>firstAPI</name>
 	<description>Demo project for APIs REST</description>
 	<url/>
