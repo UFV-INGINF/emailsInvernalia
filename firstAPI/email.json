@@ -1,0 +1,16 @@
+{
+  "to": "ignacio.serrano@hotmail.es",
+  "subject": "Correo de prueba",
+  "text": "Hola mundo mundial",
+  "html": "<b>Hello world</b>",
+  "attachments": [
+    {
+      "filename": "text1.txt",
+      "path": "/path/to/file.txt"
+    },
+    {
+      "filename": "text2.txt",
+      "path": "/path/to/file.txt"
+    }
+  ]
+}

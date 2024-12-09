@@ -1,0 +1,25 @@
+version: '3.8'
+
+services:
+  front-emails:
+    image: frontemails:latest # Reemplaza con tu imagen de Vaadin o usa un Dockerfile si tienes uno.
+    build:
+      context: ./frontEmails # Ruta donde está tu Dockerfile para la app Vaadin.
+    ports:
+      - "8080:8080" # Expone el puerto 8080 al host.
+    networks:
+      - apiexample
+    depends_on:
+      - backend-emails
+    
+
+  backend-emails:
+    image: backend-emails:latest # Reemplaza con tu imagen de la API REST o usa un Dockerfile si tienes uno.
+    build:
+      context: ./firstAPI # Ruta donde está tu Dockerfile para la API REST.
+    networks:
+      - apiexample
+
+networks:
+  apiexample:
+    driver: bridge
