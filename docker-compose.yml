@@ -6,7 +6,7 @@ services:
     build:
       context: ./frontEmails # Ruta donde está tu Dockerfile para la app Vaadin.
     ports:
-      - "8230:8080" # Expone el puerto 8080 al host.
+      - "8231:8080" # Expone el puerto 8080 al host.
     networks:
       - apiexample
     
