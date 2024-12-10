@@ -9,6 +9,8 @@ services:
       - "8231:8080" # Expone el puerto 8080 al host.
     networks:
       - apiexample
+    depends_on:
+      - backend-emails
     
 
   backend-emails:

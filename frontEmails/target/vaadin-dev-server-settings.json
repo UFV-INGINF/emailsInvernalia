@@ -9,9 +9,9 @@
   "devBundleOutput": "/Users/nacho/Desktop/dis24-25/APIsInvernalia/frontEmails/target/dev-bundle/webapp",
   "devBundleStatsOutput": "/Users/nacho/Desktop/dis24-25/APIsInvernalia/frontEmails/target/dev-bundle/config",
   "jarResourcesFolder": "/Users/nacho/Desktop/dis24-25/APIsInvernalia/frontEmails/src/main/frontend/generated/jar-resources",
-  "themeName": "",
+  "themeName": "my-theme",
   "clientServiceWorkerSource": "/Users/nacho/Desktop/dis24-25/APIsInvernalia/frontEmails/target/sw.ts",
-  "pwaEnabled": false,
-  "offlineEnabled": false,
-  "offlinePath": "'offline.html'"
+  "pwaEnabled": true,
+  "offlineEnabled": true,
+  "offlinePath": "'.'"
 }

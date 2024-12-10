@@ -9,6 +9,4 @@ COPY target/*.jar app.jar
 COPY email.json email.json
 COPY ListEmails.json ListEmails.json
 
-EXPOSE 8081
-
 CMD ["java", "-jar", "app.jar"]
