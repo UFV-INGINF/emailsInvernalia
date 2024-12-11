@@ -1,6 +1,18 @@
 {
   "productionMode": true,
   "eagerServerLoad": false,
-  "react.enable": true,
-  "applicationIdentifier": "app-3453fd6741bea11623a6f85e34e38eb953306e49ffa3ea6b02f8d59b3b147efc"
+  "npmFolder": "/var/jenkins_home/workspace/Invernalia/frontEmails",
+  "node.version": "v20.18.0",
+  "node.download.root": "https://nodejs.org/dist/",
+  "frontendFolder": "/var/jenkins_home/workspace/Invernalia/frontEmails/src/main/frontend",
+  "connect.javaSourceFolder": "/var/jenkins_home/workspace/Invernalia/frontEmails/src/main/java",
+  "javaResourceFolder": "/var/jenkins_home/workspace/Invernalia/frontEmails/src/main/resources",
+  "connect.applicationProperties": "/var/jenkins_home/workspace/Invernalia/frontEmails/src/main/resources/application.properties",
+  "connect.openApiFile": "/var/jenkins_home/workspace/Invernalia/frontEmails/target/generated-resources/openapi.json",
+  "project.frontend.generated": "/var/jenkins_home/workspace/Invernalia/frontEmails/src/main/frontend/generated",
+  "pnpm.enable": false,
+  "bun.enable": false,
+  "require.home.node": false,
+  "build.folder": "target",
+  "react.enable": true
 }
