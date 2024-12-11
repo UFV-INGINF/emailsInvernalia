@@ -1,0 +1,134 @@
+/* groovylint-disable DuplicateStringLiteral, GStringExpressionWithinString */
+pipeline {
+
+    title 'Invernalia Pipeline'
+    agent any
+
+    environment {
+        REPO_URL = 'git@github.com:UFV-INGINF/emailsInvernalia.git'
+        GIT_CREDENTIALS = 'git_credentials'
+        DOCKERHUB_CREDENTIALS = credentials('dockerhub-credentials')
+        DOCKER_IMAGE_FRONT = 'serrig/invernalia_front'
+        DOCKER_IMAGE_BACK = 'serrig/invernalia_back'
+    }
+
+    stages {
+        stage('Clone Repository') {
+            steps {
+                git url: "${REPO_URL}", credentialsId: GIT_CREDENTIALS
+                sh 'git checkout develop'
+            }
+        }
+
+        stage('Run Tests Frontend') {
+            steps {
+                dir('frontEmails') {
+                    sh 'mvn test'
+                }
+            }
+        }
+
+        stage('Run Tests Backend') {
+            steps {
+                dir('firstAPI') {
+                    sh 'mvn test'
+                }
+            }
+        }
+
+        stage('Build Frontend') {
+            steps {
+                dir('frontEmails') {
+                    sh 'mvn clean install'
+                }
+            }
+        }
+
+        stage('Build Backend') {
+            steps {
+                dir('firstAPI') {
+                    sh 'mvn clean install -Pproduction'
+                }
+            }
+        }
+
+        stage('Verify Frontend Build') {
+            steps {
+                dir('frontEmails') {
+                    sh 'ls -la target'
+                }
+            }
+        }
+
+        stage('Build Docker Image Frontend') {
+            when {
+                expression {
+                    return currentBuild.result == null || currentBuild.result == 'SUCCESS'
+                }
+            }
+            steps {
+                dir('frontEmails') {
+                    /* groovylint-disable-next-line GStringExpressionWithinString */
+                    sh "docker build -t ${DOCKER_IMAGE_FRONT}  ."
+                }
+            }
+        }
+
+        stage('Build Docker Image Backend') {
+            when {
+                expression {
+                    return currentBuild.result == null || currentBuild.result == 'SUCCESS'
+                }
+            }
+            steps {
+                dir('firstAPI') {
+                    sh 'docker build -t ${DOCKER_IMAGE_BACK} .'
+                }
+            }
+        }
+
+        stage('Login to dockerhub') {
+            when {
+                expression {
+                    return currentBuild.result == null || currentBuild.result == 'SUCCESS'
+                }
+            }
+            steps {
+                sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
+            }
+        }
+
+        stage('Push Docker Images') {
+            when {
+                expression {
+                    return currentBuild.result == null || currentBuild.result == 'SUCCESS'
+                }
+            }
+            steps {
+                script {
+                        sh "docker push ${DOCKER_IMAGE_FRONT}"
+                        sh "docker push ${DOCKER_IMAGE_BACK}"
+                }
+            }
+        }
+
+        stage('Push to Master') {
+            when {
+                expression {
+                    return currentBuild.result == null || currentBuild.result == 'SUCCESS'
+                }
+            }
+            steps {
+                sh 'git config user.email "jenkins@example.com"'
+                sh 'git config user.name "Jenkins CI"'
+                sh 'git remote -v'
+                sh 'git add .'
+                sh 'git commit -m "Adding new compilation after tests and docker images"'
+                sh 'git push origin develop'
+                sh 'git checkout master'
+                sh 'git merge -X theirs develop'
+                sh 'git push origin master'
+            }
+        }
+    }
+}
